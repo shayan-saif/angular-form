@@ -1,0 +1,96 @@
+<div style="display:flex;justify-content: center;gap:5%;">
+    <div
+        style="width: 30rem;padding: 1rem;margin: 1rem 0;border-radius: 0.5rem;background-color:cornsilk;outline: 2px solid rgb(116, 116, 116);margin-left:4rem;">
+        <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
+            <div class="mb-3">
+                <label for="firstname" class="form-label">First Name</label>
+                <input type="text" class="form-control" name="firstname" formControlName="firstName"
+                    [ngClass]="{'is-invalid': firstName?.invalid && (firstName?.dirty || firstName?.touched)}" />
+                <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger mt-2">
+                    <div *ngIf="firstName?.errors?.['required']">
+                        Name is required.
+                    </div>
+                    <div *ngIf="firstName?.errors?.['maxlength']">
+                        No greater than 5.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="lastname" formControlName="lastName"
+                    [ngClass]="{'is-invalid': lastName?.invalid && (lastName?.dirty || lastName?.touched)}" />
+                <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger mt-2">
+                    <div *ngIf="lastName?.errors?.['required']">
+                        Name is required.
+                    </div>
+                    <div *ngIf="lastName?.errors?.['maxlength']">
+                        No greater than 5.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="male" formControlName="gender"
+                        value="male" />
+                    <label class="form-check-label" for="male">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="female"
+                        formControlName="gender" />
+                    <label class="form-check-label" for="female">
+                        Female
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" name="dob" formControlName="dob"
+                    [ngClass]="{'is-invalid': dob?.invalid && (dob?.dirty || dob?.touched)}" />
+                <div *ngIf="dob?.invalid && (dob?.dirty || dob?.touched)" class="text-danger mt-2">
+                    <div *ngIf="lastName?.errors?.['required']">
+                        Date of birth is required.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" name="country" formControlName="country"
+                    [ngClass]="{'is-invalid': country?.invalid && (country?.dirty || country?.touched)}">
+                    <option value="canada">Canada</option>
+                    <option value="united_states">United States</option>
+                    <option value="mexica">Mexico</option>
+                </select>
+                <div *ngIf="country?.invalid && (country?.dirty || country?.touched)" class="text-danger mt-2">
+                    <div *ngIf="country?.errors?.['required']">
+                        Country is required.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="hobbies" class="form-label">Hobbies</label>
+                <input type="text" class="form-control" name="hobbies" placeholder="Press enter to add hobby"
+                    [(ngModel)]="hobbyField" [ngModelOptions]="{standalone: true}" (keyup)=" addHobby($event)" />
+                <ul style="list-style: none; padding: 0;display:flex;flex-wrap: wrap;gap:4px;" class="py-2">
+                    <li *ngFor="let hobby of hobbies?.value; let i = index" style="cursor: pointer;"
+                        (click)="removeHobby(i)"><span class="badge bg-dark">{{ hobby}} <i
+                                class="ms-1 fa fa-close"></i></span></li>
+                </ul>
+            </div>
+            <div style="display:grid;grid-template-columns: 2fr 1fr;gap:1rem;">
+                <button type="submit" class="btn btn-primary" style="min-width: 8rem;"
+                    [disabled]="profileForm.invalid">Submit</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="margin: 4rem 0;width:100%">
+        <code style="color: black;font-size: 1.2rem;">
+        <pre>{{ getFormData() }}</pre>
+      </code>
+    </div>
+
+    <!-- <app-textbox [value]="title" (valueChange)="title = $event"></app-textbox> -->
+</div>
